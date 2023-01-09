@@ -65,7 +65,7 @@ class QuestionIndexViewTest(TestCase):
             )
 
     def test_future_question_and_past_question(self):
-        """Even if both passed and future questions exists, only past questions are displayed"""
+        """Even if both past and future questions exists, only past questions are displayed"""
         past_question = create_question(question_text="Past question", days=-30)
         future_question = create_question(question_text="Future question", days=30)
         response = self.client.get(reverse("polls:index"))
@@ -116,10 +116,10 @@ class ChoiceResultsViewTests(TestCase):
         url = reverse("polls:results", args=(choice.pk,))
         response = self.client.get(url)
         self.assertNotContains(
-            response, f'{choice.choice_text} -- {choice.votes} votes'
+            response, f'{choice.choice_text} &nbsp; | &nbsp; {choice.votes} votes'
             )
         self.assertContains(
-            response, f'{choice.choice_text} -- {choice.votes} vote'
+            response, f'{choice.choice_text} &nbsp; | &nbsp; {choice.votes} vote'
             )
 
     def test_many_votes(self):
@@ -129,6 +129,6 @@ class ChoiceResultsViewTests(TestCase):
         url = reverse("polls:results", args=(choice.pk,))
         response = self.client.get(url)
         self.assertContains(
-            response, f'{choice.choice_text} -- {choice.votes} votes'
+            response, f'{choice.choice_text} &nbsp; | &nbsp; {choice.votes} votes'
             )
         
